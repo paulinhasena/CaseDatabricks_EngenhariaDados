@@ -4,6 +4,8 @@
 
 Nesta pipeline de dados estou seguindo a arquitetura Medalhão (Bronze → Silver → Gold) sugerida no case, a partir de dados públicos do Portal da Transparência. O objetivo é estruturar, limpar e disponibilizar datasets analíticos prontos para consumo, utilizando Databricks, PySpark e tabelas Delta.
 
+- Para a fonte de dados 202510_afastamentos baixei a mais atual no portal de transparencia federal, os demais foram os mesmos disponibilizados no case.
+
 ### Estrutura do repositório
 
 - `Database/Gold/` — contém os datasets Gold gerados em CSV para inspeção rápida.
@@ -47,28 +49,20 @@ Notebooks disponíveis:
 4. Verifique os resultados em `Database/Gold/` ou nas tabelas Delta criadas no ambiente Databricks.
 
 
+### Possíveis melhorias
+
+- Adicionar validações automáticas de qualidade (data quality checks).
+
+Registros que identifiquei na tabela gold que seriam barrados pelos validadores de qualidade
+
+- Inválidos: registros com formatos incorretos ou valores fora do esperado (ex.: id servidor malformados, cargo ou função em formato inválido).
+
+- sem informaç: registros com campos obrigatórios ausentes, com nome divergente ou nulo (ex.: id servidor, cargo, valor de remuneração).
+
+Observação: a aplicação de qualidade seria na camada Silver para evitar que esses registros cheguem à camada Gold, dessa forma consigo garantir  maior confiança nos datasets analíticos.
+
 ### Tecnologias
 
 - Databricks
 - PySpark
 - Delta Lake
-
-### Possíveis melhorias
-
-- Adicionar validações automáticas de qualidade (data quality checks).
-
-Registros que seriam barrados pelos validadores de qualidade
-
-- Inválidos: registros com formatos incorretos ou valores fora do esperado (ex.: CPF/CNPJ malformados, datas com formato inválido, campos numéricos com texto).
-- Incompletos: registros com campos obrigatórios ausentes ou nulos (ex.: matrícula, data de ocorrência, valor de remuneração).
-
-Observação: a aplicação de regras de qualidade na camada Silver evita que esses registros cheguem à camada Gold, garantindo maior confiança nos datasets analíticos.
-
-
-### Contato
-
-Para dúvidas ou melhorias, abra uma issue neste repositório ou contate o autor.
-
----
-
-Arquivo atualizado para melhorar leitura e instruções de uso.
